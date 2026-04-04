@@ -8,10 +8,51 @@
     <title>symphony</title>
   </head>
   <body>
-    <h1 class="text-3xl font-bold text-amber-400 underline">
-      Hello world!
-    </h1>
-    <div id="app"></div>
+    <div class="container">
+      <h1>Symphony</h1> 
+
+      <!-- CANVAS , CSS controls display size, JS controls resolution -->
+      <canvas id="canvas" class="w-full h-74 bg-amber-100"></canvas>
+
+      <!-- SATATUS MESSAGES that describe current process , 
+       text will be swapped by Js based on state-->
+       <div id="message">
+        <!-- if no audio input yet / audio has been stopped-->
+         <h2 id="process-message" class="ask-input" aria-live="polite">Upload an audio file or use mic to see sound visuals</h2>
+
+        <!-- error messgae -->
+          <p id="error-message" class="hidden"></p>
+       </div>
+
+      <!-- CONTROLS -->
+      <div class="buttons">
+
+        <!-- MODE TOGGLE - mic or file, only one active at a time -->
+        <div id="mode-selector">
+           <button id="btn-mode-mic" class="border">Microphone</button>
+           <button id="btn-mode-file" class="border">Audio file</button>
+         </div>
+
+        <!-- FILE INPUT, visible only in file mode-->
+         <div id="source-file" class="hidden">
+           <label for="audio-upload" class="upload-btn border">Upload audio</label>
+           <input type="file" name="audio-upload" id="audio-upload" accept="audio/*" hidden>
+         </div>
+
+
+         <!-- PLAYBACK CONTROLS, hidden until audio ready -->
+           <button id="btn-play" class="hidden">Play</button>
+
+         <!-- when audio/live sound is playing, pause or stop it -->
+         <div id="playback-controls" class="hidden">
+           <button>Pause</button>
+           <button>Stop</button>
+         </div>
+
+      </div>
+
+    </div>
+  
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
