@@ -78,3 +78,7 @@ export function stopAudio(){
 
   stopVisualizer()
 }
+
+export function getAudioCtx() {
+  return audioCtx
+}

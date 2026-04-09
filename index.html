@@ -29,6 +29,7 @@
 
         <!-- MODE TOGGLE - mic or file, only one active at a time -->
         <div id="mode-selector">
+          <p>Select mode:</p>
            <button id="btn-mode-mic" class="border">Microphone</button>
            <button id="btn-mode-file" class="border">Audio file</button>
          </div>
@@ -37,16 +38,23 @@
          <div id="source-file" class="hidden">
            <label for="audio-upload" class="upload-btn border">Upload audio</label>
            <input type="file" name="audio-upload" id="audio-upload" accept="audio/*" hidden>
+           <button id="mic-switch" class="border">Switch to mic</button>
          </div>
+
+         <!-- MIC INPUT, visible when in mic mode -->
+          <div id="mic-option" class="hidden">
+            <button id="btn-mic" class="border">Use Microphone</button>
+            <button id="file-switch" class="border">Switch to Audio file</button>
+          </div>
 
 
          <!-- PLAYBACK CONTROLS, hidden until audio ready -->
-           <button id="btn-play" class="hidden">Play</button>
+           <button id="btn-play" class="border hidden">Play</button>
 
          <!-- when audio/live sound is playing, pause or stop it -->
          <div id="playback-controls" class="hidden">
-           <button>Pause</button>
-           <button>Stop</button>
+           <button id="btn-pause" class="border pause">Pause</button>
+           <button id="btn-stop" class="border">Stop</button>
          </div>
 
       </div>

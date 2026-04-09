@@ -3,7 +3,7 @@ import { getFrequencyData } from "./audio";
 let animationId //stores rAF id so we can cancel it
 
 export function startVisualizer(canvas){
-  const canvas = document.getElementById("canvas")
+  canvas = document.getElementById("canvas")
   const ctx = canvas.getContext("2d")
 
   canvas.width = canvas.offsetWidth * devicePixelRatio
