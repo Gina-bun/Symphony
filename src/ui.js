@@ -1,6 +1,6 @@
 import { startMic, loadFile, stopAudio, getAudioCtx } from "./audio.js"
 
-export function setUpUI(){
+export function setUpUI({onMicStart, onFileLoad, onStop}){
 
 const modeSelector = document.getElementById("mode-selector")
 const micModeToggle = document.getElementById("btn-mode-mic")
