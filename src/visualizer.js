@@ -1,4 +1,4 @@
-import { getFrequencyData } from "./audio";
+import { getFrequencyData } from "./audio.js";
 
 let animationId //stores rAF id so we can cancel it
 

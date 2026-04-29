@@ -23,13 +23,21 @@ const playbackControls = document.getElementById("playback-controls")
 const pauseBtn = document.getElementById("btn-pause")
 const stopBtn = document.getElementById("btn-stop")
 
+
 //MODE SWITCHING
 function toggleMode(triggerBtn, currentMode, targetMode){
+
     triggerBtn.addEventListener("click", () => {
         currentMode.classList.add("hidden")
         targetMode.classList.remove("hidden")
     })
+
 }
+
+//To show which mode is active, mic or file
+let activeMode = null
+micModeToggle.addEventListener("click", () => { activeMode = "mic" })
+fileModeToggle.addEventListener("click", () => { activeMode = "file" })
 
 //when in mic mode 
 toggleMode(micModeToggle, modeSelector, micMode)
@@ -46,11 +54,11 @@ toggleMode(fileSwitch, micMode, fileMode)
 //PLAYBACK CONTROLS LOGIC
 //FILE input
 playBtn.addEventListener("click", async () => {
-    if(currentMode === "mic") return
+    if(activeMode === "mic") return
 
-    if(currentMode === "file"){
+    if(activeMode === "file"){
         if(fileInput.files[0]) {
-            loadFile()
+            loadFile(fileInput.files[0])
             playbackControls.classList.remove("hidden")
             playBtn.classList.add("hidden")
         }
@@ -59,7 +67,7 @@ playBtn.addEventListener("click", async () => {
 
 //MIC input
 micInputBtn.addEventListener("click", async () => {
-    if(currentMode === "mic") {
+    if(activeMode === "mic") {
         try{
             await startMic()
             playbackControls.classList.remove("hidden")
@@ -75,6 +83,7 @@ micInputBtn.addEventListener("click", async () => {
 
 //PAUSE
 pauseBtn.addEventListener("click", () => {
+    const audioCtx = getAudioCtx()
      if(pauseBtn.classList.contains("pause")) {
         audioCtx.suspend()
         pauseBtn.classList.remove("pause")
