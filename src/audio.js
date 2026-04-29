@@ -1,5 +1,3 @@
-import { startVisualizer, stopVisualizer } from "./visualizer.js"
-
 let audioCtx, analyzer, source, dataArray, currentMode, micStream
 
 //WHEN USER CLICKS THE MIC
@@ -10,7 +8,7 @@ micStream = await navigator.mediaDevices.getUserMedia({audio: true})//asking bro
 
 audioCtx = new AudioContext()//audio context created
 
-analyzer = audioCtx.createAnalyser()//analyzer node created
+analyzer = audioCtx.createAnalyser()//analyzer node created, we don't connect it to a destination because mic sound should not be heard(externally)
 analyzer.fftSize = 256//set fftSize
 
 //creating source from stream
@@ -22,7 +20,6 @@ source.connect(analyzer)
 //create data array
 dataArray = new Uint8Array(analyzer.frequencyBinCount)
 
-startVisualizer()
 }
 
 
@@ -57,7 +54,6 @@ analyzer.connect(audioCtx.destination)
 //start playing
 source.start()
 
-startVisualizer()
 }
 
 //CALLED EVERY ANIMATION FRAME BY visualizer.js
@@ -76,7 +72,6 @@ export function stopAudio(){
   audioCtx = undefined
   analyzer = undefined
 
-  stopVisualizer()
 }
 
 export function getAudioCtx() {

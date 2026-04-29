@@ -25,7 +25,7 @@ const stopBtn = document.getElementById("btn-stop")
 
 //MODE SWITCHING
 function toggleMode(triggerBtn, currentMode, targetMode){
-    triggerBtn.addEventLpistener("click", () => {
+    triggerBtn.addEventListener("click", () => {
         currentMode.classList.add("hidden")
         targetMode.classList.remove("hidden")
     })
