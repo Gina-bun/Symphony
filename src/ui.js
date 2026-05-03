@@ -1,4 +1,4 @@
-import { startMic, loadFile, stopAudio, getAudioCtx } from "./audio.js"
+import { getAudioCtx } from "./audio.js"
 
 export function setUpUI({onMicStart, onFileLoad, onStop}){
 
@@ -58,7 +58,7 @@ playBtn.addEventListener("click", async () => {
 
     if(activeMode === "file"){
         if(fileInput.files[0]) {
-            loadFile(fileInput.files[0])
+            await onFileLoad(fileInput.files[0])
             playbackControls.classList.remove("hidden")
             playBtn.classList.add("hidden")
         }
@@ -69,7 +69,7 @@ playBtn.addEventListener("click", async () => {
 micInputBtn.addEventListener("click", async () => {
     if(activeMode === "mic") {
         try{
-            await startMic()
+            await onMicStart()
             playbackControls.classList.remove("hidden")
         }
         catch(e){
@@ -103,7 +103,7 @@ pauseBtn.addEventListener("click", () => {
 
 //STOP
 stopBtn.addEventListener("click", () => {
-  stopAudio()
+  onStop()
   //reset UI back to initial
   modeSelector.classList.remove("hidden")
   playbackControls.classList.add("hidden")
