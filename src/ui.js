@@ -53,27 +53,43 @@ toggleMode(micSwitch, fileMode, micMode)
 toggleMode(fileSwitch, micMode, fileMode)
 
 //switch to mode selector if stop button is clicked
-toggleMode(stopBtn, micMode, modeSelector)
+// if (activeMode === "mic"){
+//     toggleMode(stopBtn, micMode, modeSelector)
+//     return
+
+// }else if(activeMode === "file"){ 
+//     toggleMode(stopBtn, fileMode, modeSelector)
+//     return
+// }
 
 
 //PLAYBACK CONTROLS LOGIC
 //FILE input
-playBtn.addEventListener("click", async () => {
 
-    console.log("activeMode:", activeMode)
-    console.log("file:", fileInput.files[0])
+// if(activeMode === "file"){
+//     pauseBtn.textContent = "Play"
+//     pauseBtn.classList.remove("pause")
+//     pauseBtn.classList.add("play")
+
+//     playBtn.addEventListener("click", async () => {
+//         console.log("activeMode", activeMode)
+//         console.log("activeMode:", activeMode)
+//         console.log("file:", fileInput.files[0])
+        
+//         if(activeMode === "mic") return
     
-    if(activeMode === "mic") return
+//         if(activeMode === "file"){
+//             if(fileInput.files[0]) {
+//                 await onFileLoad(fileInput.files[0])
+//                 playbackControls.classList.remove("hidden")
+//                 playBtn.classList.add("hidden")
+//                 processMessage.textContent = `Playing ${fileInput.files[0].name}....`
+//             }
+//         }
+//     })
 
-    if(activeMode === "file"){
-        if(fileInput.files[0]) {
-            await onFileLoad(fileInput.files[0])
-            playbackControls.classList.remove("hidden")
-            playBtn.classList.add("hidden")
-            processMessage.textContent = `Playing ${fileInput.files[0].name}....`
-        }
-    }
-})
+// }
+
 
 //MIC input
 micModeToggle.addEventListener("click", async () => {
@@ -94,14 +110,34 @@ micModeToggle.addEventListener("click", async () => {
 //file input
 fileInput.addEventListener("change", () => {
     if(fileInput.files[0]) {
-        playBtn.classList.remove("hidden")
+        playbackControls.classList.remove("hidden")
+        pauseBtn.textContent = "Play"
+        pauseBtn.classList.remove("pause")
+        pauseBtn.classList.add("play")
         processMessage.textContent = "Audio file ready to play"
     }
 })
 
 //PAUSE
-pauseBtn.addEventListener("click", () => {
+pauseBtn.addEventListener("click", async () => {
     const audioCtx = getAudioCtx()
+
+     if(pauseBtn.classList.contains("play") && activeMode === "file"){
+            pauseBtn.classList.remove("play")
+            pauseBtn.classList.add("pause")
+            pauseBtn.textContent = "Pause"
+        
+           if(fileInput.files[0]) {
+                await onFileLoad(fileInput.files[0])
+                playbackControls.classList.remove("hidden")
+                processMessage.textContent = `Playing ${fileInput.files[0].name}....`
+                
+            }
+
+
+        return            
+     }
+    
      if(pauseBtn.classList.contains("pause")) {
         audioCtx.suspend()
         pauseBtn.classList.remove("pause")
@@ -125,13 +161,28 @@ pauseBtn.addEventListener("click", () => {
 //STOP
 stopBtn.addEventListener("click", () => {
   onStop()
-  //reset UI back to initial
-  modeSelector.classList.remove("hidden")
-  playbackControls.classList.add("hidden")
-  if(!playBtn.classList.contains("hidden")) playBtn.classList.add("hidden")
 
-  //remove error message
-  errorMessage.classList.add("hidden")
+  //reset UI back to initial
+  if(errorMessage) errorMessage.classList.add("hidden")
+  if(!playBtn.classList.contains("hidden")) playBtn.classList.add("hidden")
+  modeSelector.classList.remove("hidden")  
+  playbackControls.classList.add("hidden")
+  processMessage.textContent = "Upload an audio file or use mic"
+
+  console.log("activeMode:", activeMode)
+
+  if(activeMode === "mic"){
+    toggleMode(stopBtn, micMode, modeSelector)
+    micMode.classList.add("hidden")
+    return
+  }
+  else if(activeMode === "file"){
+    toggleMode(stopBtn, fileMode, modeSelector)
+    fileMode.classList.add("hidden")
+    return
+  }
+ 
+  
 })
 
 
