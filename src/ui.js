@@ -70,6 +70,7 @@ playBtn.addEventListener("click", async () => {
             await onFileLoad(fileInput.files[0])
             playbackControls.classList.remove("hidden")
             playBtn.classList.add("hidden")
+            processMessage.textContent = `Playing ${fileInput.files[0].name}....`
         }
     }
 })
@@ -88,6 +89,14 @@ micModeToggle.addEventListener("click", async () => {
     }
 
     return
+})
+
+//file input
+fileInput.addEventListener("change", () => {
+    if(fileInput.files[0]) {
+        playBtn.classList.remove("hidden")
+        processMessage.textContent = "Audio file ready to play"
+    }
 })
 
 //PAUSE
