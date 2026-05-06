@@ -8,11 +8,11 @@
     <title>symphony</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container flex flex-col items-center gap-4 h-screen">
       <h1>Symphony</h1> 
 
       <!-- CANVAS , CSS controls display size, JS controls resolution -->
-      <canvas id="canvas" class="w-full h-74 bg-amber-100"></canvas>
+      <canvas id="canvas" class="w-100 rounded-full h-100 bg-pink-100"></canvas>
 
       <!-- STATUS MESSAGES that describe current process , 
        text will be swapped by Js based on state-->
@@ -43,7 +43,6 @@
 
          <!-- MIC INPUT, visible when in mic mode -->
           <div id="mic-option" class="hidden">
-            <button id="btn-mic" class="border">Use Microphone</button>
             <button id="file-switch" class="border">Switch to Audio file</button>
           </div>
 
@@ -53,7 +52,7 @@
 
          <!-- when audio/live sound is playing, pause or stop it -->
          <div id="playback-controls" class="hidden">
-           <button id="btn-pause" class="border pause">Pause</button>
+           <button id="btn-pause-resume" class="border pause">Pause</button>
            <button id="btn-stop" class="border">Stop</button>
          </div>
 

@@ -15,12 +15,11 @@ const micMode = document.getElementById("mic-option")
 const micSwitch = document.getElementById("mic-switch")
 const fileSwitch = document.getElementById("file-switch")
 
-const micInputBtn = document.getElementById("btn-mic")
 const fileInput = document.getElementById("audio-upload")
 
 const playBtn = document.getElementById("btn-play")
 const playbackControls = document.getElementById("playback-controls")
-const pauseBtn = document.getElementById("btn-pause")
+const pauseBtn = document.getElementById("btn-pause-resume")
 const stopBtn = document.getElementById("btn-stop")
 
 
@@ -31,6 +30,8 @@ function toggleMode(triggerBtn, currentMode, targetMode){
         currentMode.classList.add("hidden")
         targetMode.classList.remove("hidden")
     })
+
+
 
 }
 
@@ -51,9 +52,17 @@ toggleMode(micSwitch, fileMode, micMode)
 //switch to file mode
 toggleMode(fileSwitch, micMode, fileMode)
 
+//switch to mode selector if stop button is clicked
+toggleMode(stopBtn, micMode, modeSelector)
+
+
 //PLAYBACK CONTROLS LOGIC
 //FILE input
 playBtn.addEventListener("click", async () => {
+
+    console.log("activeMode:", activeMode)
+    console.log("file:", fileInput.files[0])
+    
     if(activeMode === "mic") return
 
     if(activeMode === "file"){
@@ -66,7 +75,7 @@ playBtn.addEventListener("click", async () => {
 })
 
 //MIC input
-micInputBtn.addEventListener("click", async () => {
+micModeToggle.addEventListener("click", async () => {
     if(activeMode === "mic") {
         try{
             await onMicStart()
@@ -89,6 +98,8 @@ pauseBtn.addEventListener("click", () => {
         pauseBtn.classList.remove("pause")
         pauseBtn.classList.add("resume")
         pauseBtn.textContent = "Resume"
+
+        return
     }
 
     if(pauseBtn.classList.contains("resume")){
@@ -96,9 +107,10 @@ pauseBtn.addEventListener("click", () => {
         pauseBtn.classList.remove("resume")
         pauseBtn.classList.add("pause")
         pauseBtn.textContent = "Pause"
+
+        return
     }
 
-    return   
 })
 
 //STOP
