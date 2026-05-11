@@ -12,6 +12,7 @@ const errorMessage = document.getElementById("error-message")
 const fileMode = document.getElementById("source-file")
 const micMode = document.getElementById("mic-option")
 
+//switch buttons
 const micSwitch = document.getElementById("mic-switch")
 const fileSwitch = document.getElementById("file-switch")
 
@@ -40,6 +41,7 @@ let activeMode = null
 micModeToggle.addEventListener("click", () => { activeMode = "mic" })
 fileModeToggle.addEventListener("click", () => { activeMode = "file" })
 
+
 //when in mic mode 
 toggleMode(micModeToggle, modeSelector, micMode)
 
@@ -60,34 +62,6 @@ toggleMode(fileSwitch, micMode, fileMode)
 // }else if(activeMode === "file"){ 
 //     toggleMode(stopBtn, fileMode, modeSelector)
 //     return
-// }
-
-
-//PLAYBACK CONTROLS LOGIC
-//FILE input
-
-// if(activeMode === "file"){
-//     pauseBtn.textContent = "Play"
-//     pauseBtn.classList.remove("pause")
-//     pauseBtn.classList.add("play")
-
-//     playBtn.addEventListener("click", async () => {
-//         console.log("activeMode", activeMode)
-//         console.log("activeMode:", activeMode)
-//         console.log("file:", fileInput.files[0])
-        
-//         if(activeMode === "mic") return
-    
-//         if(activeMode === "file"){
-//             if(fileInput.files[0]) {
-//                 await onFileLoad(fileInput.files[0])
-//                 playbackControls.classList.remove("hidden")
-//                 playBtn.classList.add("hidden")
-//                 processMessage.textContent = `Playing ${fileInput.files[0].name}....`
-//             }
-//         }
-//     })
-
 // }
 
 
@@ -183,6 +157,32 @@ stopBtn.addEventListener("click", () => {
   }
  
   
+})
+
+//SWITCHING MODE LOGIC
+micSwitch.addEventListener("click", async () => {
+    activeMode = "mic" 
+    toggleMode(micSwitch, fileMode, micMode)
+    playbackControls.classList.add("hidden")
+    onStop()
+
+    try{
+        await onMicStart()
+        playbackControls.classList.remove("hidden")
+    }
+    catch(e){
+        errorMessage.classList.remove("hidden")
+        errorMessage.textContent = e + ""
+    }
+})
+
+
+fileSwitch.addEventListener("click", () => {
+    activeMode = "file"
+    toggleMode(fileSwitch, micMode, fileMode)
+    playbackControls.classList.add("hidden")
+    onStop()
+
 })
 
 
