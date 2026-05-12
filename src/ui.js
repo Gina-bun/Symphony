@@ -71,6 +71,7 @@ micModeToggle.addEventListener("click", async () => {
         try{
             await onMicStart()
             playbackControls.classList.remove("hidden")
+            processMessage.textContent = "Using microphone to see sound visuals"
         }
         catch(e){
             errorMessage.classList.remove("hidden")
@@ -84,11 +85,12 @@ micModeToggle.addEventListener("click", async () => {
 //file input
 fileInput.addEventListener("change", () => {
     if(fileInput.files[0]) {
+        console.log(`${fileInput.files[0].name} is ready to play`) 
         playbackControls.classList.remove("hidden")
         pauseBtn.textContent = "Play"
         pauseBtn.classList.remove("pause")
         pauseBtn.classList.add("play")
-        processMessage.textContent = "Audio file ready to play"
+        processMessage.textContent = "Click play to see sound visuals"
     }
 })
 
@@ -102,6 +104,7 @@ pauseBtn.addEventListener("click", async () => {
             pauseBtn.textContent = "Pause"
         
            if(fileInput.files[0]) {
+                processMessage.textContent = `loading...`
                 await onFileLoad(fileInput.files[0])
                 playbackControls.classList.remove("hidden")
                 processMessage.textContent = `Playing ${fileInput.files[0].name}....`
@@ -165,6 +168,7 @@ micSwitch.addEventListener("click", async () => {
     toggleMode(micSwitch, fileMode, micMode)
     playbackControls.classList.add("hidden")
     onStop()
+    processMessage.textContent = "Using microphone to see sound visuals"
 
     try{
         await onMicStart()
@@ -182,6 +186,7 @@ fileSwitch.addEventListener("click", () => {
     toggleMode(fileSwitch, micMode, fileMode)
     playbackControls.classList.add("hidden")
     onStop()
+    processMessage.textContent = "Upload an audio file to see sound visuals"
 
 })
 
